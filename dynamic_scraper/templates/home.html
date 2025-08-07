@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Scraper</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 사용자 정의 스타일 */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+            <header class="text-center mb-8">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800">
+                    Job Scraper
+                </h1>
+                <p class="text-gray-500 mt-2">
+                    원하는 기술 스택으로 채용 정보를 검색하세요.
+                </p>
+            </header>
+            
+            <main>
+                <!-- 검색 폼 -->
+                <form action="/search" method="GET" class="flex flex-col sm:flex-row gap-4">
+                    <input 
+                        type="text" 
+                        name="term" 
+                        placeholder="예: python, javascript, java..."
+                        required
+                        class="w-full px-5 py-3 text-lg text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300"
+                    />
+                    <button 
+                        type="submit"
+                        class="w-full sm:w-auto px-8 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300 shadow-md">
+                        검색
+                    </button>
+                </form>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

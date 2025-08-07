@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results for {{ term }}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+                Job Scraper
+            </h1>
+            <a href="/" class="mt-4 inline-block px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300">
+                새로 검색하기
+            </a>
+        </header>
+
+        <main>
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700">
+                    <span class="font-bold text-blue-600">"{{ term }}"</span>에 대한 검색 결과
+                </h2>
+                <p class="text-gray-500">{{ job_count }}개의 채용 정보를 찾았습니다.</p>
+            </div>
+
+            <!-- 채용 정보 목록 -->
+            <div class="space-y-4 max-w-4xl mx-auto">
+                {% if jobs %}
+                    {% for job in jobs %}
+                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900">{{ job.title }}</h3>
+                                <p class="text-md text-gray-600 mt-1">{{ job.company }}</p>
+                            </div>
+                            <a href="{{ job.link }}" target="_blank" class="mt-4 sm:mt-0 flex-shrink-0 px-5 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-black transition-colors duration-300">
+                                지원하기 &rarr;
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- 결과가 없을 경우 -->
+                    <div class="text-center py-12 px-6 bg-white rounded-lg shadow-sm">
+                        <p class="text-xl text-gray-500">
+                            "{{ term }}"에 대한 채용 정보를 찾을 수 없습니다.
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
