@@ -7,6 +7,7 @@
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request, redirect, url_for
+import os
 
 # Flask 애플리케이션을 초기화합니다.
 app = Flask("JobScraper")
@@ -149,4 +150,4 @@ def search():
 
 # 스크립트가 직접 실행될 때 Flask 서버를 시작합니다.
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
