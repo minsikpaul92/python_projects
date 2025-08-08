@@ -5,7 +5,6 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # 시스템 의존성 및 Playwright 브라우저 설치에 필요한 라이브러리 설치
-# RUN apt-get update && apt-get install -y --no-install-recommends ... 와 동일한 역할을 합니다.
 RUN apt-get update && apt-get install -y \
     libnss3 \
     libxss1 \
@@ -27,6 +26,8 @@ RUN apt-get update && apt-get install -y \
     libxxf86vm1 \
     libdbus-glib-1-2 \
     procps \
+    libgl1-mesa-glx \
+    libfontconfig1 \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,14 +35,12 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Playwright 브라우저 설치 (매우 중요)
-# --with-deps 옵션으로 필요한 모든 브라우저 의존성을 함께 설치합니다.
-RUN playwright install --with-deps chromium
+# Playwright 브라우저 설치 (캐시 경로 지정)
+ENV PLAYWRIGHT_BROWSERS_PATH=/app/.cache/ms-playwright
+RUN mkdir -p $PLAYWRIGHT_BROWSERS_PATH && playwright install --with-deps chromium
 
 # 모든 애플리케이션 코드 복사
 COPY . .
 
-# 애플리케이션 실행 명령어 변경
-# main.py 대신 gunicorn을 사용하여 app.py의 Flask 앱을 실행합니다.
-# Railway는 PORT 환경 변수를 동적으로 할당하므로 이를 사용합니다.
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+# 애플리케이션 실행 명령어 (main.py 실행)
+CMD ["python", "main.py"]
